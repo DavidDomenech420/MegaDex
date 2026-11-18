@@ -8,7 +8,9 @@ from db.database import Base
 
 class Generation(Base):
     __tablename__ = "generations"
+    
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    
     # Texto unico e indexado (EJ: "generation-III")
     slug: Mapped[str] = mapped_column(String(100), unique=True, index=True)
     # Diccionario bilingüe (JSONB)
@@ -19,13 +21,17 @@ class Generation(Base):
 
 class VersionGroup(Base):
     __tablename__ = "version_groups"
+    
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    
     # Texto unico e indexado (EJ: "emerald")
     slug: Mapped[str] = mapped_column(String(100), unique=True, index=True)
+    
     generation_id: Mapped[int] = mapped_column(ForeignKey("generations.id"))
     
     # Relaciones
     generation: Mapped["Generation"] = relationship(back_populates="version_groups")
+    
     games: Mapped[list["Game"]] = relationship(back_populates="version_group")
     
 class Game(Base):
