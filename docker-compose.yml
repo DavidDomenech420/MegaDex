@@ -1,0 +1,24 @@
+
+services:
+  # 1. EL ALMACÉN (Base de datos con PostGIS)
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    restart: always
+    ports: 
+      - "5433:5432"
+    environment:
+      # Portainer inyectará estos valores desde su interfaz web
+      POSTGRES_USER: "megadex_user"
+      POSTGRES_PASSWORD: "megadex_pass"
+      POSTGRES_DB: "megadex_dev"
+    volumes:
+      - postgres_data_megadex:/var/lib/postgresql/data
+    #networks:
+    #  - proxy-net
+      
+volumes:
+  postgres_data_megadex:
+
+#networks:
+#  proxy-net:
+#    external: true
